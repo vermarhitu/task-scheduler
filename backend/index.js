@@ -9,7 +9,7 @@ var mysqlConnection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'asana',
+    database: 'task_scheduler',
     multipleStatements: true
 });
 

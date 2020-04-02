@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { browserHistory } from 'react-router';
 
 class AddTask extends Component {
   handleSubmit = (event) => {
@@ -17,11 +18,10 @@ class AddTask extends Component {
         throw new Error("Bad response from server");
       }
       return response.json();
-    }).then((respData) => {
-      console.log(respData);
     }).catch((err) => {
       console.log(err);
     });
+    browserHistory.push('/list');
   }
 
   render() {

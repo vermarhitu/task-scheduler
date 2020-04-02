@@ -6,8 +6,8 @@ class EditTask extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "sgd",
-      desc: "sdg"
+      name: "",
+      desc: ""
     };
     this.getTask();
   }
@@ -21,11 +21,10 @@ class EditTask extends Component {
       if (response.status >= 400) {
         throw new Error("Bad response from server");
       }
+      
+
       return response.json();
     })
-    // .then((data) => {
-    //   this.setState({ name: data[0].task_name, desc: data[0].task_description })
-    // })
     .catch((err) => {
       console.log(err);
     });
@@ -34,11 +33,11 @@ class EditTask extends Component {
   editTask(event){
     event.preventDefault();
     const data = {
-      name: event.target.title.value,
+      name: event.target.name.value,
       description: event.target.desc.value
     };
     console.log(data);
-    fetch("http://localhost:3000/tasks"+this.props.params.id, {
+    fetch("http://localhost:3000/tasks/"+this.props.params.id, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
@@ -47,11 +46,10 @@ class EditTask extends Component {
         throw new Error("Bad response from server");
       }
       return response.json();
-    }).then((respData) => {
-      console.log(respData);
     }).catch((err) => {
       console.log(err);
     });
+
     browserHistory.push('/list');
   }
 
@@ -66,15 +64,15 @@ class EditTask extends Component {
           <div className="col-md-2" />
           <div className="col-md-8 appointment-form-wrapper text-center clearfix">
             
-              <form onSubmit={event => this.handleSubmit(event)} className="appoinment-form">
+              <form onSubmit={event => this.editTask(event)} className="appoinment-form">
                 <div className="form-group col-md-6">
-                  <input required name="title" className="form-control" placeholder="Title" type="text" value={this.state.name} />
+                  <input required name="name" className="form-control" placeholder="Title" type="text"/>
                 </div>
                 <div className="form-group col-md-6">
-                  <input required name="desc" className="form-control" placeholder="Description" type="text" value={this.state.desc} />
+                  <input required name="desc" className="form-control" placeholder="Description" type="text"/>
                 </div>
                 <div className="form-group col-md-12 col-sm-12 col-xs-12">
-                  <button className="btn-submit" type="submit" onClick={() => {this.editTask()}}>Update Task</button>
+                  <button className="btn-submit" type="submit" >Update Task</button>
                 </div>
               </form>
             
